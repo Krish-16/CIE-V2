@@ -1,22 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import LoginCard from "../components/LoginCard";
 
 const StudentLogin = () => {
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    const res = await fetch("http://localhost:5000/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, password, role: "student" }),
+    });
+
+    const data = await res.json();
+
+    if (data.token) {
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      window.location.href = "/student-dashboard";
+    } else {
+      alert(data.message || "Login failed");
+    }
+  };
+
   return (
     <div
-      className="min-h-screen bg-cover bg-center flex items-center justify-center relative overflow-hidden"
+      className="min-h-screen bg-cover bg-center flex items-center justify-center"
       style={{
-        backgroundImage: `url("https://i.postimg.cc/QMvRwF9r/IMG-1611-jpg.jpg")`,
+        backgroundImage: "url('https://i.postimg.cc/QMvRwF9r/IMG-1611-jpg.jpg')",
       }}
     >
-      {/* Animated BG Elements (same as above) */}
-      <div className="absolute inset-0">
-        <div className="absolute top-20 left-20 w-32 h-32 bg-green-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
-        <div className="absolute top-40 right-20 w-32 h-32 bg-yellow-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div className="absolute -bottom-8 left-40 w-32 h-32 bg-red-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
-      </div>
-
-      <LoginCard title="EZCIE Student Portal" />
+      <LoginCard
+        title="EZCIE Student Portal"
+        subtitle="Please sign in to continue."
+        idPlaceholder="Student ID"
+        passwordPlaceholder="Password"
+        buttonText="Sign In"
+        id={id}
+        setId={setId}
+        password={password}
+        setPassword={setPassword}
+        onSubmit={handleLogin}
+      />
     </div>
   );
 };
