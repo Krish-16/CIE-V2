@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
 
-const facultySchema = new mongoose.Schema({
+const FacultySchema = new mongoose.Schema({
   facultyId: { type: String, required: true, unique: true },
+  name: { type: String, required: true },
+  department: { type: String, required: true },
   password: { type: String, required: true },
-  approvedStudents: [{ type: mongoose.Schema.Types.ObjectId, ref: "Student" }]
 });
 
-module.exports = mongoose.model("Faculty", facultySchema);
+module.exports = mongoose.model("Faculty", FacultySchema);

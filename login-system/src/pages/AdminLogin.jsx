@@ -1,25 +1,32 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import LoginCard from "../components/LoginCard";
 
 const AdminLogin = () => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
-    const res = await fetch("http://localhost:5000/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id, password, role: "admin" }),
-    });
+    setError("");
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, password, role: "admin" }),
+      });
+      const data = await res.json();
 
-    const data = await res.json();
-
-    if (data.token) {
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      window.location.href = "/admin-dashboard";
-    } else {
-      alert(data.message || "Login failed");
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        navigate("/admin-dashboard", { replace: true });
+      } else {
+        setError(data.message || "Login failed");
+      }
+    } catch {
+      setError("Network error. Try again.");
     }
   };
 
@@ -35,12 +42,13 @@ const AdminLogin = () => {
         subtitle="Admin Login"
         idPlaceholder="Admin ID"
         passwordPlaceholder="Password"
-        buttonText="Sign In"
+        buttonText="Login In"
         id={id}
         setId={setId}
         password={password}
         setPassword={setPassword}
         onSubmit={handleLogin}
+        error={error}
       />
     </div>
   );

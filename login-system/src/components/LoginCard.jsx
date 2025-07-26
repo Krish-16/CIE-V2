@@ -12,6 +12,7 @@ const LoginCard = ({
   setId,
   password,
   setPassword,
+  error,
 }) => {
   return (
     <div className="bg-white bg-opacity-90 rounded-xl shadow-lg p-8 w-full max-w-md">
@@ -43,6 +44,11 @@ const LoginCard = ({
       >
         {buttonText}
       </button>
+      {error && (
+        <p className="mt-2 text-red-600 text-sm text-center">
+          {error}
+        </p>
+      )}
     </div>
   );
 };

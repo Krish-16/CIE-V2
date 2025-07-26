@@ -3,20 +3,45 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AdminLogin from "./pages/AdminLogin";
 import FacultyLogin from "./pages/FacultyLogin";
 import StudentLogin from "./pages/StudentLogin";
-import AdminDashboard from "./pages/AdminDashboard";
-import FacultyDashboard from "./pages/FacultyDashboard";
-import StudentDashboard from "./pages/StudentDashboard";
+import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
+import FacultyDashboard from "./pages/FacultyDashboard/FacultyDashboard";
+import StudentDashboard from "./pages/StudentDashboard/StudentDashboard";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
     <Router>
       <Routes>
+        {/* Login Pages */}
         <Route path="/" element={<StudentLogin />} />
         <Route path="/faculty" element={<FacultyLogin />} />
         <Route path="/admin" element={<AdminLogin />} />
-        <Route path="/admin-dashboard" element={<AdminDashboard />} />
-        <Route path="/faculty-dashboard" element={<FacultyDashboard />} />
-        <Route path="/student-dashboard" element={<StudentDashboard />} />
+
+        {/* Protected Dashboards with nested routes */}
+        <Route
+          path="/admin-dashboard/*"
+          element={
+            <PrivateRoute role="admin">
+              <AdminDashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/faculty-dashboard/*"
+          element={
+            <PrivateRoute role="faculty">
+              <FacultyDashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/student-dashboard/*"
+          element={
+            <PrivateRoute role="student">
+              <StudentDashboard />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </Router>
   );
