@@ -6,7 +6,8 @@ import DashboardHome from "./DashboardHome";
 import StudentList from "./StudentList";
 import AssignFaculty from "./AssignFaculty";
 import ManageClasses from "./ManageClasses";
-import ManageFaculty from "./ManageFaculty";  // New ManageFaculty component
+import ManageFaculty from "./ManageFaculty";  // Existing ManageFaculty component
+import ManageDepartments from "./ManageDepartments"; // NEW ManageDepartments component import
 import Profile from "./Profile";
 import LogoutButton from "./LogoutButton";
 
@@ -21,8 +22,11 @@ const AdminDashboard = () => {
           <Route path="students" element={<StudentList />} />
           <Route path="assign" element={<AssignFaculty />} />
           <Route path="manage-classes" element={<ManageClasses />} />
-          <Route path="manage-faculty" element={<ManageFaculty />} /> {/* New route */}
+          <Route path="manage-faculty" element={<ManageFaculty />} />
+          {/* NEW Manage Departments route */}
+          <Route path="manage-departments" element={<ManageDepartments />} />
           <Route path="profile" element={<Profile />} />
+          {/* Default redirect to home */}
           <Route path="" element={<Navigate to="home" replace />} />
         </Routes>
       </main>

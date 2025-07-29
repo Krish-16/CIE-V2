@@ -8,11 +8,10 @@ const Navbar = () => {
       : "text-gray-200 hover:text-white border-b-2 border-transparent pb-1";
 
   return (
-    <nav className="bg-blue-700 p-4 flex space-x-8">
+    <nav className="bg-blue-700 p-4 flex space-x-8 overflow-auto">
       <NavLink to="/admin-dashboard/home" className={linkClass}>
         Home
       </NavLink>
-      {/* Faculty link removed */}
       <NavLink to="/admin-dashboard/students" className={linkClass}>
         Students
       </NavLink>
@@ -24,6 +23,13 @@ const Navbar = () => {
       </NavLink>
       <NavLink to="/admin-dashboard/manage-faculty" className={linkClass}>
         Manage Faculty
+      </NavLink>
+      {/* New Manage Departments link */}
+      <NavLink to="/admin-dashboard/manage-departments" className={linkClass}>
+        Manage Departments
+      </NavLink>
+      <NavLink to="/admin-dashboard/manage-subjects" className={linkClass}>
+        Manage Subjects
       </NavLink>
       <NavLink to="/admin-dashboard/profile" className={linkClass}>
         Profile
